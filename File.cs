@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnixFileSystem
 {
-    class File
+    public class File
     {
 
         public string Nom { get; set; }
@@ -40,27 +40,36 @@ namespace UnixFileSystem
 
         public void chmod(int permission) {
             
-            this.Permissions = permission;
+            if(permission >= 0 && permission < 8 && !isSlash)
+                this.Permissions = permission;
         }
 
         public string getPath()
         {
-            File inturn = this;
-            string path = "";
+            if (canRead())
+            {
+                File inturn = this;
+                string path = "";
 
-            while (inturn.Nom != "/") {
-                 
-                 path = inturn.Nom + "/" + path;
-                 inturn = inturn.Parent;
-                 
-                 }
+                while (inturn.Nom != "/")
+                {
 
-            return path;
+                    path = inturn.Nom + "/" + path;
+                    inturn = inturn.Parent;
 
+                }
+
+                return path;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public File getRoot()
         {
+            if (this.canRead()) { 
             File inturn = this;
 
             if (this.isSlash) { } else { 
@@ -71,14 +80,16 @@ namespace UnixFileSystem
             }
             }
             return inturn;
-
+            }
+            else
+                return null;
         }
 
 
         
         public File getParent() {
 
-            if (this.Nom != "/") 
+            if (!this.isSlash) 
                 return this.Parent;
             else{
                 Console.WriteLine("Vous êtes déja au bout du monde");
@@ -110,7 +121,7 @@ namespace UnixFileSystem
                 return true;
         }
     
-
+        
         public bool canWrite() { return (this.Permissions & 2) > 0; }
         public bool canExecute() { return (this.Permissions & 1) > 0; }
         public bool canRead() { return (this.Permissions & 4) > 0; }

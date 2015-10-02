@@ -14,11 +14,11 @@ class Program
 // Je ne sais pas si cela est une bonne pratique ... Je t'avais d'ailleurs fait la remarque par mail (Ajouter une classe pour l'affichage), mais tu m'avais dit que ce n'était pas la peine. 
 // De plus, c'est ce que j'ai compris dans ta démarche de nous imposé les signatures de méthodes. 
 // Bonne correction ! 
-
+    
 static void Main(string[] args)
 {
     string command;
-    File courants = new Directory("/", true);
+     File courants = new Directory("/", true);
 
     do
     {
@@ -30,12 +30,12 @@ static void Main(string[] args)
     string arg = GetArg(saisie);
     string secondarg = GetSecondArg(saisie);
 
-    if (courants.isDirectory() == true)  
+    if (courants.isDirectory())  
     {
         Directory courant = (Directory)courants;
 
 
-        if (command == "create" && saisie != null)
+        if (command.Equals("create") && arg != null)
         {
             bool ok = courant.createNewFile(arg);
 
@@ -48,7 +48,7 @@ static void Main(string[] args)
              
         }
 
-        else if (command == "mkdir" && saisie != null && arg != null)
+        else if (command.Equals("mkdir") && arg != null)
         {
             bool ok = courant.mkdir(arg);
             if (ok)
@@ -56,37 +56,42 @@ static void Main(string[] args)
             else
                 Console.WriteLine("Echec dans la création du dossier");
         }
-        if (command == "ls" && saisie != null )
+        if (command.Equals("ls"))
         {
-            if (courant.canRead())
-            {
+          
                 List<File> list = courant.ls();
 
-                if (list.Count == 0)
+                if (list == null) {
+
+                    Console.WriteLine("Vous n'avez pas le droit de faire cette action");
+                
+                }
+                else if (list.Count == 0)
                 {
                     Console.WriteLine("Le dossier spécifié est vide");
                 }
-                else {
-                    foreach (File encours in list) {
+                else
+                {
+                    foreach (File encours in list)
+                    {
                         string type = "";
 
-                        if (encours.isDirectory()) { type = "Directory";  }
+                        if (encours.isDirectory()) { type = "Directory"; }
                         else if (encours.isFile()) { type = "File"; }
 
                         Console.WriteLine(encours.GetPermission() + " " + encours.Nom + " " + type);
 
-                    } 
+                    }
                 }
-            }
-            else
-                Console.WriteLine("Vous n'avez pas le droit de faire cette action");
+          
+                
         }
-        else if (command == "cd" && saisie != null && arg != null)
+        else if (command.Equals("cd") && arg != null)
         {
             
              File next = courant.cd(arg);
 
-            if (next == null || !next.canRead())
+            if (next == null)
              {
                  Console.WriteLine("Déplacement invalide");
              }
@@ -95,7 +100,7 @@ static void Main(string[] args)
              }
         }
 
-        else if (command == "search" && saisie != null && arg != null)
+        else if (command.Equals("search") && arg != null)
         {
 
             List<File> resultat = courant.search(arg);
@@ -109,7 +114,7 @@ static void Main(string[] args)
             }
         }
 
-        else if (command == "remove" && saisie != null && arg != null)
+        else if (command.Equals("delete") && arg != null)
         {
             
             bool ok = courant.delete(arg);
@@ -122,7 +127,7 @@ static void Main(string[] args)
                 Console.WriteLine("Echec dans la suppression");
 
         }
-        else if (command == "rename" && saisie != null && arg != null && secondarg != null)
+        else if (command.Equals("rename") && arg != null && secondarg != null)
         {
             bool ok = courant.rename(arg, secondarg);
 
@@ -138,9 +143,9 @@ static void Main(string[] args)
 
 
         }
-    else if(courants.isFile() == true) { // COMMANDE SI C'EST UNE FILE 
+    else if(courants.isFile()) { // COMMANDE SI C'EST UNE FILE 
 
-        if (command == "ls" && saisie != null)
+        if (command == "ls")
         {
 
                 Console.WriteLine("Vous êtes dans une file");
@@ -149,20 +154,26 @@ static void Main(string[] args)
     }
 
     // COMMANDE VALABLE POUR LES 2 TYPES
-    if (command == "") { }
+    if (command.Equals("")) { }
 
-    if (command == "parent") {
+    if (command.Equals("parent")) {
 
         courants = courants.getParent();
     }
 
-    if (command == "path")
+    if (command.Equals("path"))
     {
         string path  = courants.getPath();
-        Console.WriteLine(path);
+
+        if (path != null)
+        {
+            Console.WriteLine(path);
+        }
+        else
+            Console.WriteLine("Vous n'avez pas le droit de faire cette action");
     }
 
-    if (command == "file")
+    if (command.Equals("file"))
     {
         if (courants.isFile())
         {
@@ -174,7 +185,7 @@ static void Main(string[] args)
         }
     }
 
-    if (command == "directory")
+    if (command.Equals("directory"))
     {
 
         if (courants.isDirectory())
@@ -189,17 +200,22 @@ static void Main(string[] args)
 
    
 
-    if (command == "root")
+    if (command.Equals("root"))
     {
 
         File root = courants.getRoot();
-        
+
+        if (root != null)
+        {
         Console.WriteLine(root.Nom);
+          }
+        else
+            Console.WriteLine("Vous n'avez pas le droit de faire cette action");
     }
 
 
 
-    if (command == "chmod" && saisie != null && arg != null)
+    if (command.Equals("chmod") && saisie != null && arg != null)
         {
             try
             {
@@ -216,13 +232,13 @@ static void Main(string[] args)
             }
         }
 
-    if (command == "exit" && saisie != null)
+    if (command.Equals("exit") && saisie != null)
         {
             Console.WriteLine("System halted");
         }
               
 
-    } while(command != "exit");
+    } while(!command.Equals("exit"));
 
     Console.ReadLine();
 

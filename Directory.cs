@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace UnixFileSystem
 {
 
-    class Directory : File
+    public class Directory : File
     {
         public List<File> contenu = new List<File>();
         
@@ -39,7 +39,7 @@ namespace UnixFileSystem
          public List<File> search(string name) 
         {
             List<File>  resultat = null;
-            if (base.canRead())
+            if (this.canRead())
             {
                resultat = new List<File>();
 
@@ -68,7 +68,7 @@ namespace UnixFileSystem
 
          public bool delete(string name) {
 
-             if (canWrite() && !verifyname(name))
+             if (this.canWrite() && !verifyname(name))
              {
                  foreach (File encours in contenu)
                  {
@@ -94,7 +94,7 @@ namespace UnixFileSystem
             {
                 foreach (File encours in contenu)
                 {
-                    if (encours.Nom == name)
+                    if (encours.Nom == name && encours.canRead())
                         return encours;
 
                 }
@@ -142,9 +142,13 @@ namespace UnixFileSystem
 
 
         public List<File> ls() {
-           
+
+            if (this.canRead())
+            {
                 return this.contenu;
-           
+            }
+            else
+                return null;
         }
 
 

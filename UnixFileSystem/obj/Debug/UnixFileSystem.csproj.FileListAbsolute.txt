@@ -1,9 +1,0 @@
-c:\users\alexandre bertrand\documents\visual studio 2012\Projects\UnixFileSystem\UnixFileSystem\bin\Debug\UnixFileSystem.exe.config
-c:\users\alexandre bertrand\documents\visual studio 2012\Projects\UnixFileSystem\UnixFileSystem\bin\Debug\UnixFileSystem.exe
-c:\users\alexandre bertrand\documents\visual studio 2012\Projects\UnixFileSystem\UnixFileSystem\bin\Debug\UnixFileSystem.pdb
-c:\users\alexandre bertrand\documents\visual studio 2012\Projects\UnixFileSystem\UnixFileSystem\obj\Debug\UnixFileSystem.csprojResolveAssemblyReference.cache
-c:\users\alexandre bertrand\documents\visual studio 2012\Projects\UnixFileSystem\UnixFileSystem\obj\Debug\UnixFileSystem.exe
-c:\users\alexandre bertrand\documents\visual studio 2012\Projects\UnixFileSystem\UnixFileSystem\obj\Debug\UnixFileSystem.pdb
-C:\Users\Alexandre BERTRAND\Documents\workspace\projet1\FileSystem\UnixFileSystem\bin\Debug\UnixFileSystem.exe.config
-C:\Users\Alexandre BERTRAND\Documents\workspace\projet1\FileSystem\UnixFileSystem\obj\Debug\UnixFileSystem.exe
-C:\Users\Alexandre BERTRAND\Documents\workspace\projet1\FileSystem\UnixFileSystem\obj\Debug\UnixFileSystem.pdb
